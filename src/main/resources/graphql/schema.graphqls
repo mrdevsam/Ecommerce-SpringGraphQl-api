@@ -11,6 +11,7 @@ type Query {
 
 type Mutation {
 	createUser(username: String!, email: String!, password: String!, admin: Boolean): UserDetailsForAdmin
+	updateUser(username: String!, update: UserUpdater!): UserDetailsForAdmin
 }
 
 interface User {
@@ -31,6 +32,10 @@ type UserDetailsForAdmin implements User {
 	isAdmin: Boolean
 }
 
-
+input UserUpdater {
+	email: String!
+	password: String!
+	isAdmin: Boolean
+}
 
 

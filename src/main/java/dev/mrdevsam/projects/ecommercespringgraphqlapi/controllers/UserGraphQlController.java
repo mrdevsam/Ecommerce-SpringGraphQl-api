@@ -1,6 +1,7 @@
 package dev.mrdevsam.projects.ecommercespringgraphqlapi.controllers;
 
 import dev.mrdevsam.projects.ecommercespringgraphqlapi.model.User;
+import dev.mrdevsam.projects.ecommercespringgraphqlapi.model.UserUpdater;
 import dev.mrdevsam.projects.ecommercespringgraphqlapi.repositories.UserRepo;
 
 import java.util.*;
@@ -44,4 +45,23 @@ public class UserGraphQlController {
 		log.info("getting new user details: " + username);
 		return repo.findById(username).get();
 	}
+
+	@MutationMapping()
+	public User updateUser(@Argument String username, @Argument UserUpdater update) {
+		User userToUp = repo.findById(username).orElse(null);
+
+		if(userToUp == null) {
+			throw new RuntimeException("Invalid user!!!");
+		}
+
+		userToUp.setUsername(username);
+		userToUp.setEmail(update.email());
+		userToUp.setPassword(update.password());
+		userToUp.setAdmin(update.admin());
+		log.info("saving updated user details: " + username);
+		repo.save(userToUp);
+		log.info("getting updated user details: " + username);
+		return repo.findById(username).get();
+	}
+
 }
