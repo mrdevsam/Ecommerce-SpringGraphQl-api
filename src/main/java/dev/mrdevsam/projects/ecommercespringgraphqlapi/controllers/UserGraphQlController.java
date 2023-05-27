@@ -30,6 +30,12 @@ public class UserGraphQlController {
 		return repo.findById(username).get();
 	}
 
+	@QueryMapping()
+	public User findUserByNameForAdmin(@Argument String username) {
+		log.info("For Admin: requesting user details for username: " + username);
+		return repo.findById(username).get();
+	}
+
 	@MutationMapping()
 	public User createUser(@Argument String username, @Argument String email, @Argument String password, @Argument boolean admin) {
 		User newUser = new User(username, email, password, admin);

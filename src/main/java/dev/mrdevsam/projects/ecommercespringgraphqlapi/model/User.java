@@ -24,6 +24,6 @@ public class User {
 	@NotNull
 	private String password;
 	
-	private boolean isAdmin;
+	private boolean admin;
 	
 }

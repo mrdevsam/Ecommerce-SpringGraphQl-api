@@ -1,19 +1,33 @@
 type Query {
 
 	# find all users from database
-	findAllUsers: [User!]
+	findAllUsers: [UserDetails!]
 
 	# find a user by username
-	findUserByName(username: String!): User
+	findUserByName(username: String!): UserDetails
+
+	findUserByNameForAdmin(username: String!): UserDetailsForAdmin
 }
 
 type Mutation {
-	createUser(username: String!, email: String!, password: String!, admin: Boolean): User
+	createUser(username: String!, email: String!, password: String!, admin: Boolean): UserDetailsForAdmin
 }
 
-type User {
+interface User {
 	username: String!
 	email: String!
+}
+
+type UserDetails implements User {
+	username: String!
+	email: String!
+	isAdmin: Boolean
+}
+
+type UserDetailsForAdmin implements User {
+	username: String!
+	email: String!
+	password: String!
 	isAdmin: Boolean
 }
 
