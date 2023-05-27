@@ -7,10 +7,16 @@ type Query {
 	findUserByName(username: String!): User
 }
 
+type Mutation {
+	createUser(username: String!, email: String!, password: String!, admin: Boolean): User
+}
+
 type User {
 	username: String!
 	email: String!
 	isAdmin: Boolean
 }
+
+
 
 

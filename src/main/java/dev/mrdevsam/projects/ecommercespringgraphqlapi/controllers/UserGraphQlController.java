@@ -29,4 +29,13 @@ public class UserGraphQlController {
 		log.info("requesting user details for username: " + username);
 		return repo.findById(username).get();
 	}
+
+	@MutationMapping()
+	public User createUser(@Argument String username, @Argument String email, @Argument String password, @Argument boolean admin) {
+		User newUser = new User(username, email, password, admin);
+		log.info("saving new user details: " + username);
+		repo.save(newUser);
+		log.info("getting new user details: " + username);
+		return repo.findById(username).get();
+	}
 }

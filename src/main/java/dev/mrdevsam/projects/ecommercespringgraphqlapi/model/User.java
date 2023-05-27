@@ -18,6 +18,7 @@ public class User {
 
 	@NotNull
 	@NotEmpty
+	@Email
 	private String email;
 
 	@NotNull
