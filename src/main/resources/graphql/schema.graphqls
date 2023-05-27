@@ -2,6 +2,9 @@ type Query {
 
 	# find all users from database
 	findAllUsers: [User!]
+
+	# find a user by username
+	findUserByName(username: String!): User
 }
 
 type User {
@@ -9,3 +12,5 @@ type User {
 	email: String!
 	isAdmin: Boolean
 }
+
+

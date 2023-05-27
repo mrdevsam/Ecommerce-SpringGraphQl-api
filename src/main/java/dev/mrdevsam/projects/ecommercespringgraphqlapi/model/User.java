@@ -5,6 +5,7 @@ import lombok.*;
 import jakarta.validation.constraints.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity(name = "users")
 public class User {

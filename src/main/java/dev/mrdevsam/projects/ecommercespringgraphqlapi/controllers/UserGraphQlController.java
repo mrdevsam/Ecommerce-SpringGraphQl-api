@@ -23,4 +23,10 @@ public class UserGraphQlController {
 		log.info("getting all users from database");
 		return repo.findAll();
 	}
+
+	@QueryMapping()
+	public User findUserByName(@Argument String username) {
+		log.info("requesting user details for username: " + username);
+		return repo.findById(username).get();
+	}
 }
