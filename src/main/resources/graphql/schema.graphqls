@@ -12,6 +12,7 @@ type Query {
 type Mutation {
 	createUser(username: String!, email: String!, password: String!, admin: Boolean): UserDetailsForAdmin
 	updateUser(username: String!, update: UserUpdater!): UserDetailsForAdmin
+	deleteUser(username: String!): [UserDetails!]
 }
 
 interface User {

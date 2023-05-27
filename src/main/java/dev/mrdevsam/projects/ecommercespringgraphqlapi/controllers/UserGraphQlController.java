@@ -64,4 +64,15 @@ public class UserGraphQlController {
 		return repo.findById(username).get();
 	}
 
+	@MutationMapping
+	public List<User> deleteUser(@Argument String username) {
+		if(repo.existsById(username)) {
+			repo.deleteById(username);
+		}else{
+			throw new RuntimeException("Invalid user!!!");
+		}
+		
+		return repo.findAll();
+	}
+
 }
