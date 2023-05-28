@@ -30,8 +30,8 @@ public class EcommerceSpringGraphqlApiApplication {
 			);
 			
 			List<Product> products = List.of(
-				new Product("qqqq","qqq qqq qqq qqq", 4.54D, 2.34D, "dsf", "sffs", "sfgsf",cats.get(0)),
-				new Product("rrr","qqq qqq qsfsfsfsqq qqq", 2.24D, 2.84D, "dsqqweqef", "sfewewwrfs", "sfsdfdfgsf",cats.get(1))
+				new Product("qqqq","qqq qqq qqq qqq", 4.54F, 2.34F, "dsf", "sffs", "sfgsf",cats.get(0)),
+				new Product("rrr","qqq qqq qsfsfsfsqq qqq", 2.24F, 2.84F, "dsqqweqef", "sfewewwrfs", "sfsdfdfgsf",cats.get(1))
 			);
 
 			urepo.saveAll(users);

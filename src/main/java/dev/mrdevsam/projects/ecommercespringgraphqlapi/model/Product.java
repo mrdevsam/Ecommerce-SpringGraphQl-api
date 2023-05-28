@@ -22,10 +22,10 @@ public class Product {
 	private String description;
 
 	@NotNull
-	private double price;
+	private Float price;
 
 	@NotNull
-	private double weight;
+	private Float weight;
 
 	@NotNull
 	@NotEmpty
@@ -35,7 +35,7 @@ public class Product {
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
 	private Category category;
 
-	public Product(String name, String description, double price, double weight, String picture1, String picture2, String picture3, Category category) {
+	public Product(String name, String description, Float price, Float weight, String picture1, String picture2, String picture3, Category category) {
 		this.name = name;
 		this.description  = description;
 		this.price = price;

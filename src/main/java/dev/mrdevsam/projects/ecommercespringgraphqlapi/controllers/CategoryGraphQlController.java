@@ -49,9 +49,8 @@ public class CategoryGraphQlController {
 		catToUp.setId(id);
 		catToUp.setName(update.name());
 		catToUp.setPicture(update.picture());
-		//log.info("saving updated user details: " + username);
+		
 		repo.save(catToUp);
-		//log.info("getting updated user details: " + username);
 		return repo.findById(id).get();
 	}
 
@@ -60,7 +59,7 @@ public class CategoryGraphQlController {
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
 		}else{
-			throw new RuntimeException("Invalid user!!!");
+			throw new RuntimeException("Invalid category!!!");
 		}
 		
 		return repo.findAll();

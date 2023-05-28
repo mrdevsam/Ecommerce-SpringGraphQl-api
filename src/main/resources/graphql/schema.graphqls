@@ -2,11 +2,17 @@ type Query {
 
 	# find all users from database
 	findAllUsers: [UserDetails!]
+
+	# find all categories from database
 	findAllCategories: [Category!]
 
-	# find a user by username
+	# find all product from database
+	findAllProducts: [Product!]
+
+	# find a single entity using primary key
 	findUserByName(username: String!): UserDetails
 	findCategory(id: ID!): Category
+	findProduct(id: ID!): Product
 
 	findUserByNameForAdmin(username: String!): UserDetailsForAdmin
 }
@@ -16,9 +22,13 @@ type Mutation {
 	updateUser(username: String!, update: UserUpdater!): UserDetailsForAdmin
 	deleteUser(username: String!): [UserDetails!]
 
+	createProduct(categoryid: Int!, name: String!, description: String!, price: Float!, weight: Float!, picture1: String!, picture2: String!, picture3: String!): [Product!]
+	updateProduct(id: Int!, categoryid: Int!, update: ProductUpdater!): Product
+	deleteProduct(id: Int!): [Product!]
+
 	createCategory(name: String!, picture: String!): [Category!]
-	updateCategory(id: ID!, update: CategoryUpdater!): Category
-	deleteCategory(id: ID!): [Category!]
+	updateCategory(id: Int!, update: CategoryUpdater!): Category
+	deleteCategory(id: Int!): [Category!]
 }
 
 interface User {
@@ -47,14 +57,14 @@ input UserUpdater {
 
 type Category {
 	id: ID!
-	name: String
-	picture: String
+	name: String!
+	picture: String!
 	products: [Product!]
 }
 
 input CategoryUpdater {
-	name: String
-	picture: String
+	name: String!
+	picture: String!
 }
 
 type Product {
@@ -63,9 +73,19 @@ type Product {
 	description: String!
 	price: Float!
 	weight: Float!
-	picture1: String
-	picture2: String
-	picture3: String
+	picture1: String!
+	picture2: String!
+	picture3: String!
 	category: Category!
+}
+
+input ProductUpdater {
+	name: String!
+	description: String!
+	price: Float!
+	weight: Float!
+	picture1: String!
+	picture2: String!
+	picture3: String!
 }
 
