@@ -32,6 +32,18 @@ public class Product {
 	private String picture1, picture2, picture3;
 
 	@ManyToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "id")
 	private Category category;
+
+	public Product(String name, String description, double price, double weight, String picture1, String picture2, String picture3, Category category) {
+		this.name = name;
+		this.description  = description;
+		this.price = price;
+		this.weight = weight;
+		this.picture1 = picture1;
+		this.picture2 = picture2;
+		this.picture3 = picture3;
+		this.category = category;
+	}
 	
 }

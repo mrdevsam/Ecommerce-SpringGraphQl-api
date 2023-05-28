@@ -2,9 +2,11 @@ type Query {
 
 	# find all users from database
 	findAllUsers: [UserDetails!]
+	findAllCategories: [Category!]
 
 	# find a user by username
 	findUserByName(username: String!): UserDetails
+	findCategory(id: ID!): Category
 
 	findUserByNameForAdmin(username: String!): UserDetailsForAdmin
 }
@@ -13,6 +15,10 @@ type Mutation {
 	createUser(username: String!, email: String!, password: String!, admin: Boolean): UserDetailsForAdmin
 	updateUser(username: String!, update: UserUpdater!): UserDetailsForAdmin
 	deleteUser(username: String!): [UserDetails!]
+
+	createCategory(name: String!, picture: String!): [Category!]
+	updateCategory(id: ID!, update: CategoryUpdater!): Category
+	deleteCategory(id: ID!): [Category!]
 }
 
 interface User {
@@ -39,4 +45,27 @@ input UserUpdater {
 	isAdmin: Boolean
 }
 
+type Category {
+	id: ID!
+	name: String
+	picture: String
+	products: [Product!]
+}
+
+input CategoryUpdater {
+	name: String
+	picture: String
+}
+
+type Product {
+	id: ID!
+	name: String!
+	description: String!
+	price: Float!
+	weight: Float!
+	picture1: String
+	picture2: String
+	picture3: String
+	category: Category!
+}
 

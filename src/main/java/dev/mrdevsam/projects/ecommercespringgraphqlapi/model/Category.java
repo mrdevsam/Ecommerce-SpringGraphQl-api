@@ -23,7 +23,12 @@ public class Category {
 	@NotEmpty
 	private String picture;
 
-	@OneToMany(mappedBy = "category")
+	@OneToMany(cascade = CascadeType.ALL ,mappedBy = "category")
 	private List<Product> products;
+
+	public Category(String name, String picture) {
+		this.name = name;
+		this.picture = picture;
+	}
 	
 }
