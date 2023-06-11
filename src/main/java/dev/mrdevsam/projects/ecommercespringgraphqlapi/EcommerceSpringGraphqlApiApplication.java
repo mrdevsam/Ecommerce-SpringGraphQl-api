@@ -17,12 +17,8 @@ public class EcommerceSpringGraphqlApiApplication {
 	}
 
 	@Bean
-	CommandLineRunner initializer(UserRepo urepo, CategoryRepo crepo, ProductRepo prepo) {
+	CommandLineRunner initializer(CategoryRepo crepo, ProductRepo prepo) {
 		return args -> {
-			List<User> users = List.of(
-				new User("aaa", "emaila@mail.com", "sdflkjs", true),
-				new User("bbb", "emailb@mail.com", "sdffsdflkjs", false)
-			);
 
 			List<Category> cats = List.of(
 				new Category("EE", "ppp"),
@@ -34,7 +30,6 @@ public class EcommerceSpringGraphqlApiApplication {
 				new Product("rrr","qqq qqq qsfsfsfsqq qqq", 2.24F, 2.84F, "dsqqweqef", "sfewewwrfs", "sfsdfdfgsf",cats.get(1))
 			);
 
-			urepo.saveAll(users);
 			crepo.saveAll(cats);
 			prepo.saveAll(products);
 		};

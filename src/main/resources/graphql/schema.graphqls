@@ -1,65 +1,33 @@
 type Query {
 
-	# find all users from database
-	findAllUsers: [UserDetails!]
-
 	# find all categories from database
-	findAllCategories: [Category!]
+	findAllCategories: [Category]!
 
 	# find all product from database
-	findAllProducts: [Product!]
+	findAllProducts: [Product]!
 
 	# find a single entity using primary key
-	findUserByName(username: String!): UserDetails
 	findCategory(id: ID!): Category
 	findProduct(id: ID!): Product
 
-	findUserByNameForAdmin(username: String!): UserDetailsForAdmin
 }
 
 type Mutation {
-	createUser(username: String!, email: String!, password: String!, admin: Boolean): UserDetailsForAdmin
-	updateUser(username: String!, update: UserUpdater!): UserDetailsForAdmin
-	deleteUser(username: String!): [UserDetails!]
 
-	createProduct(categoryid: Int!, name: String!, description: String!, price: Float!, weight: Float!, picture1: String!, picture2: String!, picture3: String!): [Product!]
+	createProduct(categoryid: Int!, name: String!, description: String!, price: Float!, weight: Float!, picture1: String!, picture2: String!, picture3: String!): [Product]!
 	updateProduct(id: Int!, categoryid: Int!, update: ProductUpdater!): Product
-	deleteProduct(id: Int!): [Product!]
+	deleteProduct(id: Int!): [Product]!
 
-	createCategory(name: String!, picture: String!): [Category!]
+	createCategory(name: String!, picture: String!): [Category]!
 	updateCategory(id: Int!, update: CategoryUpdater!): Category
-	deleteCategory(id: Int!): [Category!]
-}
-
-interface User {
-	username: String!
-	email: String!
-}
-
-type UserDetails implements User {
-	username: String!
-	email: String!
-	isAdmin: Boolean
-}
-
-type UserDetailsForAdmin implements User {
-	username: String!
-	email: String!
-	password: String!
-	isAdmin: Boolean
-}
-
-input UserUpdater {
-	email: String!
-	password: String!
-	isAdmin: Boolean
+	deleteCategory(id: Int!): [Category]!
 }
 
 type Category {
 	id: ID!
 	name: String!
 	picture: String!
-	products: [Product!]
+	products: [Product]!
 }
 
 input CategoryUpdater {
@@ -88,4 +56,3 @@ input ProductUpdater {
 	picture2: String!
 	picture3: String!
 }
-
