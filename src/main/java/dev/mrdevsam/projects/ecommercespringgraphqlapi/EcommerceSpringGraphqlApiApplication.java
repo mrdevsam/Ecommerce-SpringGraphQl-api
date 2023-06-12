@@ -1,6 +1,7 @@
 package dev.mrdevsam.projects.ecommercespringgraphqlapi;
 
 import dev.mrdevsam.projects.ecommercespringgraphqlapi.model.*;
+import dev.mrdevsam.projects.ecommercespringgraphqlapi.config.RsaKeyProperties;
 import dev.mrdevsam.projects.ecommercespringgraphqlapi.repositories.*;
 import java.util.*;
 
@@ -8,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties(RsaKeyProperties.class)
 public class EcommerceSpringGraphqlApiApplication {
 
 	public static void main(String[] args) {

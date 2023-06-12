@@ -12,11 +12,21 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.*;
+import com.nimbusds.jose.jwk.*;
+import com.nimbusds.jose.jwk.source.*;
+import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 class SecurityConfig {
+
+	private final RsaKeyProperties keyProperties;
+
+	public SecurityConfig(RsaKeyProperties keyProperties) {
+		this.keyProperties = keyProperties;
+	}
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsManager() {
@@ -44,6 +54,9 @@ class SecurityConfig {
 			.authorizeHttpRequests( auth -> {
 				auth.anyRequest().authenticated();
 			}) // allow all requests for a authentiocated user
+			.oauth2ResourceServer(oauth2 -> {
+				oauth2.jwt(withDefaults());
+			})
 			.sessionManagement(
 				session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			) // disable session management
@@ -53,5 +66,21 @@ class SecurityConfig {
 	@Bean
 	PasswordEncoder passEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	JwtDecoder jwtDecoder() {
+		return NimbusJwtDecoder.withPublicKey(keyProperties.publicKey()).build();
+	}
+
+	@Bean
+	JwtEncoder jwtEncoder() {
+		// encode the signature and sign it with private key
+		JWK jwk = new RSAKey
+						.Builder(keyProperties.publicKey())
+						.privateKey(keyProperties.privateKey())
+						.build();
+		JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+		return new NimbusJwtEncoder(jwks);
 	}
 }
