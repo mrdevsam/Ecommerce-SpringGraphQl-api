@@ -55,7 +55,7 @@ class SecurityConfig {
 				auth.anyRequest().authenticated();
 			}) // allow all requests for a authentiocated user
 			.oauth2ResourceServer(oauth2 -> {
-				oauth2.jwt(withDefaults());
+				oauth2.jwt(jwt -> jwt.decoder(jwtDecoder()));
 			})
 			.sessionManagement(
 				session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
