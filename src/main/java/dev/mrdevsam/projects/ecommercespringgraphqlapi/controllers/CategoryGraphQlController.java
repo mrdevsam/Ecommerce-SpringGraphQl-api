@@ -8,6 +8,7 @@ import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @Controller
 @Slf4j
@@ -19,18 +20,21 @@ public class CategoryGraphQlController {
 		this.repo = repo;
 	}
 
+	@PreAuthorize("hasRole('USER')")
 	@QueryMapping
 	public List<Category> findAllCategories() {
 		log.debug("getting all categories from database");
 		return repo.findAll();
 	}
 
+	@PreAuthorize("hasRole('USER')")
 	@QueryMapping()
 	public Category findCategory(@Argument Integer id) {
 		log.info("requesting category details for id: " + id);
 		return repo.findById(id).get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@MutationMapping()
 	public List<Category> createCategory(@Argument String name, @Argument String picture) {
 		Category newcat = new Category(name, picture);
@@ -38,6 +42,7 @@ public class CategoryGraphQlController {
 		return repo.findAll();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@MutationMapping()
 	public Category updateCategory(@Argument Integer id, @Argument CategoryUpdater update) {
 		Category catToUp = repo.findById(id).orElse(null);
@@ -54,6 +59,7 @@ public class CategoryGraphQlController {
 		return repo.findById(id).get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@MutationMapping
 	public List<Category> deleteCategory(@Argument Integer id) {
 		if(repo.existsById(id)) {

@@ -7,6 +7,7 @@ import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @Controller
 @Slf4j
@@ -20,18 +21,21 @@ public class ProductGraphQlController {
 		this.crepo = crepo;
 	}
 
+	@PreAuthorize("hasRole('USER')")
 	@QueryMapping
 	public List<Product> findAllProducts() {
 		log.debug("getting all products details from database");
 		return prepo.findAll();
 	}
 
+	@PreAuthorize("hasRole('USER')")
 	@QueryMapping()
 	public Product findProduct(@Argument Integer id ) {
 		log.debug("getting product details for id: " + id);
 		return prepo.findById(id).get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@MutationMapping()
 	public List<Product> createProduct(@Argument Integer categoryid, @Argument String name, @Argument String description, @Argument Float price, @Argument Float weight, @Argument String picture1, @Argument String picture2, @Argument String picture3) {
 		Category catgry = crepo.findById(categoryid).orElse(null);
@@ -50,6 +54,7 @@ public class ProductGraphQlController {
 		return prepo.findAll();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@MutationMapping()
 	public Product updateProduct(@Argument Integer id, @Argument Integer categoryid, @Argument ProductUpdater update) {
 		Product prdctToUp = prepo.findById(id).orElse(null);
@@ -79,6 +84,7 @@ public class ProductGraphQlController {
 		return prepo.findById(id).get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@MutationMapping
 	public List<Product> deleteProduct(@Argument Integer id) {
 		if(prepo.existsById(id)) {
