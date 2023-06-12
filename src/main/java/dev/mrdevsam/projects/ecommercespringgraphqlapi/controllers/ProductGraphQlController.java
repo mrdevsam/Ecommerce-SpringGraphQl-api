@@ -22,13 +22,13 @@ public class ProductGraphQlController {
 
 	@QueryMapping
 	public List<Product> findAllProducts() {
-		log.info("getting all products details from database");
+		log.debug("getting all products details from database");
 		return prepo.findAll();
 	}
 
 	@QueryMapping()
 	public Product findProduct(@Argument Integer id ) {
-		log.info("getting product details for id: " + id);
+		log.debug("getting product details for id: " + id);
 		return prepo.findById(id).get();
 	}
 
@@ -37,14 +37,14 @@ public class ProductGraphQlController {
 		Category catgry = crepo.findById(categoryid).orElse(null);
 
 		if(catgry == null) {
-			log.info("no category found for categoryid: " + categoryid);
+			log.debug("no category found for categoryid: " + categoryid);
 			catgry = new Category();
 			catgry.setName("undefined");
 			catgry.setPicture("undefined");
 		}
 
 		Product newProduct = new Product(name, description, price, weight, picture1, picture2, picture3, catgry);
-		log.info("saving new product");
+		log.debug("saving new product");
 		crepo.save(catgry);
 		prepo.save(newProduct);
 		return prepo.findAll();
@@ -73,7 +73,7 @@ public class ProductGraphQlController {
 		prdctToUp.setPicture3(update.picture3());
 		prdctToUp.setCategory(ctToUp);
 		
-		log.info("saving updated Product");
+		log.debug("saving updated Product");
 		prepo.save(prdctToUp);
 		
 		return prepo.findById(id).get();

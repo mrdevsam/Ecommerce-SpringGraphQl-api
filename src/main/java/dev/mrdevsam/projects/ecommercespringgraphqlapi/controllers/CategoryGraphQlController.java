@@ -21,7 +21,7 @@ public class CategoryGraphQlController {
 
 	@QueryMapping
 	public List<Category> findAllCategories() {
-		log.info("getting all categories from database");
+		log.debug("getting all categories from database");
 		return repo.findAll();
 	}
 
