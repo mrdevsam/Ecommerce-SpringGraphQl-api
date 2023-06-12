@@ -50,16 +50,14 @@ class SecurityConfig {
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		return http
-			.csrf(csrf -> csrf.disable()) 
-			.authorizeHttpRequests( auth -> {
-				auth.anyRequest().authenticated();
-			}) // allow all requests for a authentiocated user
+			.csrf(csrf -> csrf.disable())
+			.authorizeHttpRequests( auth -> auth.requestMatchers("/").permitAll() )
+			.authorizeHttpRequests( auth -> auth.requestMatchers("/token").hasRole("USER") )
+			.authorizeHttpRequests( auth ->	auth.anyRequest().authenticated() ) // allow all requests for a authentiocated user
 			.oauth2ResourceServer(oauth2 -> {
 				oauth2.jwt(jwt -> jwt.decoder(jwtDecoder()));
 			})
-			.sessionManagement(
-				session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			) // disable session management
+			.sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) ) // disable session management
 			.httpBasic(withDefaults()).build();
 	}
 
